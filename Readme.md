@@ -37,8 +37,9 @@ var act = sentence.IsMeaningAct("알림", false);
 var sentence = parse("2시에 내게 알림을 해줘");
 if (sentence.IsMeaningAct("알림"))
 {
-    var time = sentence.GetActWhen("알림");
-    var to = sentence.GetActToWho("알림");
+    var act = sentence.GetAct("알림");
+    var time = act.GetWhen();
+    var to = act.GetToWho();
 }
 ```
 
@@ -49,10 +50,17 @@ var sentence = parse("2시에 알림이 있니?");
 if (sentence.IsAskingAct("알림", AskingType.BOOL))
 {
     var act = sentence.GetAct("알림");
-    var result = new Dictionary<string, object>();
-    if (act.IsAskingTime())
-    {
-        result.Add("언제", DateTime.Now);
-    }
+    var time = act.GetWhen();
+    var result = IsThereSchedule(time);
+}
+```
+
+### 목표#5
+
+```csharp
+var sentence = parse("언제 알림이 있니?");
+if (sentence.IsAscingAct("알림", AskingType.TIME))
+{
+    var result = GetSchedules();
 }
 ```
